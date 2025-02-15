@@ -27,4 +27,8 @@ RUN pip install -r requirements.txt
 # Make sure scripts in venv are executable
 RUN chmod +x /venv/bin/*
 
+# Set up entrypoint shell script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh 
+
 USER devcontainer
