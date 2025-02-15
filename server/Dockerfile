@@ -17,7 +17,7 @@ ENV VIRTUAL_ENV=/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Set working directory
-WORKDIR /code
+WORKDIR /code/server
 RUN chown devcontainer:devcontainer /code
 
 # Install Python dependencies

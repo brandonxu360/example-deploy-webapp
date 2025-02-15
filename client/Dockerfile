@@ -5,7 +5,7 @@ FROM node:20-alpine
 RUN apk add --no-cache git
 
 # Create app directory
-WORKDIR /code
+WORKDIR /code/client
 
 # Get npm dependencies
 COPY package*.json ./

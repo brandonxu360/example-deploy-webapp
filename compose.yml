@@ -4,8 +4,9 @@ services:
     build:
       context: ./client
     volumes:
-      - /code/node_modules # Allow container to manage its own dependencies
-      - ./client:/code
+      - /code/client/node_modules # Allow container to manage its own dependencies
+      - .:/code # Copy from root directory to include git
+    working_dir: /code/client
     ports:
       - "5173:5173"
     # Enable HMR websocket connections
@@ -15,8 +16,10 @@ services:
   server:
     build:
       context: ./server
+    # Copy from root directory to include git
     volumes:
-      - ./server:/code
+      - .:/code
+    working_dir: /code/server
     ports:
       - "8000:8000"
     environment:
