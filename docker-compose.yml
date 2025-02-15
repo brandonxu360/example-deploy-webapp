@@ -1,16 +1,20 @@
 services:
-  db:
-    image: postgres
+  # React frontend application
+  client:
+    build:
+      context: ./client
     volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - /code/node_modules # Allow container to manage its own dependencies
+      - ./client:/code
+    ports:
+      - "5173:5173"
+    # Enable HMR websocket connections
+    command: npm run dev -- --host
+
+  # Django backend application
   server:
     build:
       context: ./server
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./server:/code
     ports:
@@ -21,3 +25,15 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+    command: python manage.py runserver 0.0.0.0:8000
+
+  # PostgreSQL database
+  db:
+    image: postgres
+    # Uncomment to persist data across container stops
+    # volumes:
+    #  - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
