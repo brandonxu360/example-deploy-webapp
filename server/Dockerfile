@@ -3,6 +3,11 @@ FROM python:3.11.11-slim-bookworm
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Install git
+RUN apt-get update && \
+    apt-get install -y git && \
+    rm -rf /var/lib/apt/lists/*
+
 # Create non-root user (using Debian commands)
 RUN groupadd -g 1000 devcontainer && \
     useradd -m -u 1000 -g devcontainer devcontainer
